@@ -23,6 +23,7 @@ def parse_option():
     parser.add_argument('--nb_class', type=int, default=11, help='class number')
     parser.add_argument('--ucr_path', type=str, default='./datasets', help='Data root for dataset.')
     parser.add_argument('--ckpt_dir', type=str, default='./ckpt/', help='Data path for checkpoint.')
+    parser.add_argument('--log_dir', type=str, default='./results/', help='Data path for log.')
     parser.add_argument('--model_name', type=str, default='TSSCD', choices=['TSSCD','TCN','LSTM','TSSCD-D'], help='choose methods')
     opt = parser.parse_args()
     return opt
@@ -36,20 +37,20 @@ if __name__ == "__main__":
     Seeds = [2022,2023,2024,2025,2026]  
     Runs = range(0, 2, 1)
 
-    log_dir = './results/{}/{}'.format(opt.dataset_name, opt.model_name)
-    os.makedirs(log_dir, exist_ok=True)
+    opt.log_dir = './results/{}/{}'.format(opt.dataset_name, opt.model_name)
+    os.makedirs(opt.log_dir, exist_ok=True)
 
-    with open("{}/train_detail.log".format(log_dir), 'a+') as file2print_detail_train:
+    with open("{}/train_detail.log".format(opt.log_dir), 'a+') as file2print_detail_train:
         print(datetime.datetime.now(), file=file2print_detail_train)
         print("Dataset\tTrain\tTest\tDimension\tClass\tSeed\tVal_Acc_label\tEpoch_max", file=file2print_detail_train)
         file2print_detail_train.flush()
 
-    with open("{}/test.log".format(log_dir), 'a+') as file2print:
+    with open("{}/test.log".format(opt.log_dir), 'a+') as file2print:
         print(datetime.datetime.now(), file=file2print)
         print("Dataset\tAcc_mean\tAcc_std\tEpoch_max", file=file2print)
         file2print.flush()
 
-    with open("{}/test_detail.log".format(log_dir), 'a+') as file2print_detail:
+    with open("{}/test_detail.log".format(opt.log_dir), 'a+') as file2print_detail:
         print(datetime.datetime.now(), file=file2print_detail)
         print("Dataset\tTrain\tlabel_ratio\tTest\tDimension\tClass\tSeed\tAcc_max\tEpoch_max\ttest_oa\ttest_aa\ttest_kappa\ttest_S_PA\ttest_S_UA\ttest_S_F1\ttest_T_PA\ttest_T_UA\ttest_T_F1", file=file2print_detail)
         file2print_detail.flush()
@@ -103,15 +104,15 @@ if __name__ == "__main__":
         test_T_PA_seed[seed] = round(np.mean(list(test_T_PA_run.values())), 2)
         test_T_UA_seed[seed] = round(np.mean(list(test_T_UA_run.values())), 2)
         test_T_F1_seed[seed] = round(np.mean(list(test_T_F1_run.values())), 2)
-        
-        with open("{}/train_detail.log".format(log_dir), 'a+') as file2print_detail_train:
+
+        with open("{}/train_detail.log".format(opt.log_dir), 'a+') as file2print_detail_train:
             print("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(
                     opt.dataset_name, x_train.shape[0], x_test.shape[0], x_train.shape[1], opt.nb_class,
                     seed, best_acc_seed[seed],MAX_EPOCHs_seed[seed]),
                     file=file2print_detail_train)
             file2print_detail_train.flush()
 
-        with open("{}/test_detail.log".format(log_dir), 'a+') as file2print_detail:
+        with open("{}/test_detail.log".format(opt.log_dir), 'a+') as file2print_detail:
             print("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(
                 opt.dataset_name, x_train.shape[0], opt.label_ratio, x_test.shape[0], x_train.shape[1], opt.nb_class,
                 seed, ACCs_seed[seed], MAX_EPOCHs_seed[seed], test_oa_seed[seed], test_aa_seed[seed], test_kappa_seed[seed],
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     ACCs_seed_std = round(np.std(list(ACCs_seed.values())), 2)
     MAX_EPOCHs_seed_max = np.max(list(MAX_EPOCHs_seed.values()))
 
-    with open("{}/test.log".format(log_dir), 'a+') as file2print:
+    with open("{}/test.log".format(opt.log_dir), 'a+') as file2print:
         print("{}\t{}\t{}\t{}".format(
             opt.dataset_name, ACCs_seed_mean, ACCs_seed_std, MAX_EPOCHs_seed_max),
             file=file2print)

@@ -212,7 +212,7 @@ class Model(torch.nn.Module):
                 print(f"{i}\t{producer_accuracy[i]:.4f} ± {np.std(producer_accuracy):.4f}\t{user_accuracy[i]:.4f} ± {np.std(user_accuracy):.4f}")
 
 
-            with open(f"{opt.ckpt_dir}/classification_accuracy.txt", "w") as f:
+            with open(f"{opt.log_dir}/classification_accuracy.txt", "w") as f:
                 f.write("Class\tProducer Accuracy (PA)\tUser Accuracy (UA)\n")
                 for i in range(num_classes):
                     f.write(f"{i}\t{producer_accuracy[i]:.4f} ± {np.std(producer_accuracy):.4f}\t{user_accuracy[i]:.4f} ± {np.std(user_accuracy):.4f}\n")
