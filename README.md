@@ -13,7 +13,7 @@
 </div>
 
 The official PyTorch implementation of the paper  
-**"Long-term Mangrove Change Detection Using Ecological-Consistent Temporal Semantic Segmentation with Dilated Temporal Modeling"**,  
+**"Monitoring of mangrove dynamic change with Landsat time series from 1987 to 2022 in the Beibu Gulf, China"**,  
 accepted by the *International Journal of Applied Earth Observation and Geoinformation*.
 
 > **TSSCD-D** is an enhanced version of **TSSCD**, incorporating **dilated temporal convolutions** to enlarge the temporal receptive field, enabling robust long-term change detection from dense Landsat time series.
