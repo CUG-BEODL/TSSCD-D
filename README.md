@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[[Paper]](to be added) · [[Code]](https://github.com/yourname/TSSCD-D)
+[[Paper]](https://doi.org/10.1016/j.jag.2026.105128) · [[Code]](https://github.com/yourname/TSSCD-D)
 
 </div>
 
